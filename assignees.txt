@@ -1,1 +1,1 @@
- petrzdansky;Filip743;VojtechBuba;dominikjasek;Spilky;AdamAbrahaam;zipper;janvacek;jankaderabek;premyslposker;
+ petrzdansky (Petr Ždánský);Filip743 (Filip Paluch);VojtechBuba (Vojtěch Buba);dominikjasek (Dominik Jašek);Spilky (David Spilka);AdamAbrahaam (Adam Abrahám);zipper (Radek Šerý);janvacek (Honza Vacek);jankaderabek (Honza Kadeřábek);premyslposker (Přemysl Posker);
