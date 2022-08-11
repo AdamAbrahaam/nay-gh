@@ -14,31 +14,31 @@ newPR () {
 
   exit 1
 
-  pr=$(eval "node -pe \"'$prurl'.split('/').reverse()[0]\"")
+  # pr=$(eval "node -pe \"'$prurl'.split('/').reverse()[0]\"")
 
-  #issue_comment=`
-  #- @petrzdansky @Filip743 @sebastianvass hotovo
-  #- PR projektu https://github.com/peckadesign/nayeshop/pull/$pr
-  #- K testovaní na
+  # issue_comment=`
+  # - @petrzdansky @Filip743 @sebastianvass hotovo
+  # - PR projektu https://github.com/peckadesign/nayeshop/pull/$pr
+  # - K testovaní na
   #    - http://test$pr.nay2020.peckadesign.com`
 
-  read -p "comment? Y/n " comment
-  if [[ $comment == "n" || $comment == "N" ]]; then
-    exit 1
-  fi
+  # read -p "comment? Y/n " comment
+  # if [[ $comment == "n" || $comment == "N" ]]; then
+  #   exit 1
+  # fi
 
-  open -t /tmp/issue_comment.tmp
-  issue_comment=`cat /tmp/issue_comment.tmp`
+  # open -t /tmp/issue_comment.tmp
+  # issue_comment=`cat /tmp/issue_comment.tmp`
 
-  comment_url=$(eval "gh issue comment https://github.com/peckadesign/$4/issues/$3 --body '${issue_comment}'")
-  eval "open $comment_url"
+  # comment_url=$(eval "gh issue comment https://github.com/peckadesign/$4/issues/$3 --body '${issue_comment}'")
+  # eval "open $comment_url"
 }
 
 merge () {
   echo 'TODO'
 }
 
-read -p "repo (tool[T], eshop[E], content-editor[C])?: " repo || exit 1
+read -p "repo (tool[T], eshop[E], content-editor[C], benu[B])?: " repo || exit 1
 repo=$(tr '[:upper:]' '[:lower:]'<<<${repo})
 
 case $repo in
@@ -48,8 +48,11 @@ case $repo in
   e | eshop)
     repo='nayeshop'
     ;;
-  c | eshop)
+  c | content-editor)
     repo='contenteditor'
+    ;;
+  b | benu)
+    repo='benu-frontend'
     ;;
   *)
     exit 1
@@ -58,9 +61,6 @@ esac
 
 currentBranch=$(eval "cd ~/repos/$repo/ && git rev-parse --symbolic-full-name --abbrev-ref HEAD")
 issue=(${currentBranch//-/ }[0])
-
-read -p "action (new[N], merge[M])?: " action || exit 1
-action=$(tr '[:upper:]' '[:lower:]'<<<${action})
 
 read -p "branch (${currentBranch}?): " branch
 [[ -z "$branch" ]] && branch=${currentBranch}
@@ -76,14 +76,4 @@ fi
 read -p "commit message ('$currentIssueTitle'?): " commit
 [[ -z "$commit" ]] && commit=${currentIssueTitle}
 
-case $action in
-  n | new)
-    newPR "$commit" "$branch" "$issue" "$repo"
-    ;;
-  m | merge)
-    merge
-    ;;
-  *)
-    exit 1
-    ;;
-esac
+newPR "$commit" "$branch" "$issue" "$repo"
